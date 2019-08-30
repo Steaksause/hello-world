@@ -1,0 +1,35 @@
+#include <SD.h>
+#include <SPI.h>
+#include <Servo.h> 
+#include <LIDARLite.h>
+unsigned long pulsewidth;
+int i=0;
+File myFile;
+Servo myservo;
+void setup() 
+{ 
+  Serial.begin(9600);
+  Serial.begin(115200); //Serial Port for LIDAR
+  myservo.attach(10); //Designates port for servo
+  myservo.write(0); //Writes the servo angle to start at 0
+  pinMode(2,OUTPUT); //Pin 2 is trigger pin
+  digitalWrite(2, LOW); //Continuous Read
+  pinMode(3,INPUT); //Pin 3 is monitor pin
+    SD.begin(10); //Begins SD adaptervgf vgf  p[;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       qaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaq                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+  myFile = SD.open("data.txt."); //Open data.txt file
+} 
+
+void loop() {
+while (i <=180){
+  i++; //Add one to i
+  myservo.write(i); //Increments the degree of servo by 1
+  pulsewidth = pulseIn(3,HIGH); //Count how long the pulse is high in ms
+  if (pulsewidth !=0); //If pulsewidth is not 0 it prints
+  {
+  pulsewidth = pulsewidth/10; //10usec = 1cm of distance 
+  Serial.println(pulsewidth); // Print the distance 
+  }
+  delay(500); //Pause one second before doing the loop
+  }
+  myFile.close();
+  }
